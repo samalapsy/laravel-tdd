@@ -14,7 +14,8 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        //
+        $results = collect([]);
+        return view('authors.index', $results);
     }
 
     /**
@@ -24,7 +25,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        //
+        return view('authors.create');
     }
 
     /**
@@ -50,7 +51,7 @@ class AuthorController extends Controller
      */
     public function show(Author $author)
     {
-        //
+        return view('authors.show', $author);
     }
 
     /**
@@ -61,7 +62,7 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
-        //
+        return view('authors.edit');
     }
 
     /**
@@ -91,7 +92,7 @@ class AuthorController extends Controller
     public function validateRequest()
     {
         return request()->validate([
-            'name' => 'required|string',
+            'name' => 'required|string', 
             'dob' => 'required|date',
         ]);
     }

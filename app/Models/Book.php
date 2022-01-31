@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use \Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,5 +44,20 @@ class Book extends Model
             'user_id' => $user->id,
             'checked_out_at' => now(),
         ]);
+    }
+
+
+    public function checkin(User $user)
+    {
+        $reservation = $this->reservations()
+        ->whereUserId($user->id)
+        ->whereNotNull('checked_out_at')->whereNull('checked_in_at')->first();
+        if(is_null($reservation))
+            throw new Exception;
+
+        $reservation->update([
+            'checked_in_at' => now(),
+        ]);
+        
     }
 }

@@ -18,6 +18,7 @@ class CreateReservationsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('book_id');
             $table->timestamp('checked_out_at')->default(now());
+            $table->timestamp('checked_in_at')->nullable();
             $table->timestamps();
         });
     }

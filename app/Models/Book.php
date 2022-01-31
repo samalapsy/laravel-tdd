@@ -40,7 +40,7 @@ class Book extends Model
 
     public function checkout(User $user)
     {
-        $this->reservations()->firstOrCreate([
+        return $this->reservations()->firstOrCreate([
             'user_id' => $user->id,
             'checked_out_at' => now(),
         ]);
@@ -52,8 +52,9 @@ class Book extends Model
         $reservation = $this->reservations()
         ->whereUserId($user->id)
         ->whereNotNull('checked_out_at')->whereNull('checked_in_at')->first();
-        if(is_null($reservation))
-            throw new Exception;
+        if(is_null($reservation)){
+            throw new \Exception();
+        }
 
         $reservation->update([
             'checked_in_at' => now(),

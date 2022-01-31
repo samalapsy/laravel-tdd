@@ -64,6 +64,8 @@ class BookReservationTest extends TestCase
             'title' => 'Updated book title',
             'author' => 'Updated Olu Sam',
         ]);
+
+        $book = Book::first();
         
         $response->assertStatus(200);
         $this->assertEquals('Updated book title', $book->title );

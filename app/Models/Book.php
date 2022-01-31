@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use \Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,5 +23,25 @@ class Book extends Model
         $this->attributes['author_id'] = Author::firstOrCreate([
             'name' => $str
         ])->id;
+    }
+
+
+    /**
+     * Get all of the comments for the Book
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reservations(): HasMany
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
+
+    public function checkout(User $user)
+    {
+        $this->reservations()->firstOrCreate([
+            'user_id' => $user->id,
+            'checked_out_at' => now(),
+        ]);
     }
 }
